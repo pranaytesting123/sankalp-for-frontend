@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   inputFilled: {
-    borderColor: '#2563EB',
-    backgroundColor: '#EFF6FF',
+    borderColor: '#8B5CF6',
+    backgroundColor: '#F3E8FF',
   },
   inputError: {
     borderColor: '#EF4444',

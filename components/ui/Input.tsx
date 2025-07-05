@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   inputContainerFocused: {
-    borderColor: '#2563EB',
-    shadowColor: '#2563EB',
+    borderColor: '#8B5CF6',
+    shadowColor: '#8B5CF6',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.1,
     shadowRadius: 4,

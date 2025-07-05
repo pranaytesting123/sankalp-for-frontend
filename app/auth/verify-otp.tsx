@@ -102,7 +102,7 @@ export default function VerifyOTPScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
-        colors={['#EFF6FF', '#DBEAFE', '#FFFFFF']}
+        colors={['#F3E8FF', '#EDE9FE', '#FFFFFF']}
         style={styles.gradient}
       >
         <KeyboardAvoidingView
@@ -115,12 +115,15 @@ export default function VerifyOTPScreen() {
                 style={styles.backButton}
                 onPress={() => router.back()}
               >
-                <ArrowLeft size={24} color="#2563EB" />
+                <ArrowLeft size={24} color="#8B5CF6" />
               </TouchableOpacity>
               
-              <View style={styles.iconContainer}>
-                <Mail size={48} color="#2563EB" />
-              </View>
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.iconContainer}
+              >
+                <Mail size={48} color="#FFFFFF" />
+              </LinearGradient>
               
               <Text style={styles.title}>Verify Your Email</Text>
               <Text style={styles.subtitle}>
@@ -207,10 +210,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#EFF6FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
   },
   title: {
     fontSize: 28,
@@ -227,7 +234,7 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#2563EB',
+    color: '#8B5CF6',
     textAlign: 'center',
   },
   form: {
@@ -257,7 +264,7 @@ const styles = StyleSheet.create({
   },
   resendText: {
     fontSize: 16,
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontWeight: '600',
   },
   resendTextDisabled: {

@@ -27,7 +27,7 @@ export default function ProfileScreen() {
   const [errors, setErrors] = useState<{ fullName?: string; phone?: string }>({});
 
   const stats = [
-    { icon: BookOpen, label: 'Courses Enrolled', value: '12', color: '#2563EB' },
+    { icon: BookOpen, label: 'Courses Enrolled', value: '12', color: '#8B5CF6' },
     { icon: Trophy, label: 'Certificates', value: '8', color: '#059669' },
     { icon: Star, label: 'Average Score', value: '4.8', color: '#F59E0B' },
     { icon: Calendar, label: 'Days Active', value: '45', color: '#7C3AED' },
@@ -83,7 +83,7 @@ export default function ProfileScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <LinearGradient
-          colors={['#2563EB', '#1D4ED8']}
+          colors={['#8B5CF6', '#7C3AED']}
           style={styles.header}
         >
           <View style={styles.headerContent}>
@@ -92,17 +92,20 @@ export default function ProfileScreen() {
                 colors={['#FFFFFF', '#F8FAFC']}
                 style={styles.avatar}
               >
-                <User size={48} color="#2563EB" />
+                <User size={48} color="#8B5CF6" />
               </LinearGradient>
             </View>
             
             <Text style={styles.userName}>{user?.name || 'Student'}</Text>
             <Text style={styles.userEmail}>{user?.email}</Text>
             
-            <View style={styles.verificationBadge}>
-              <Check size={12} color="#059669" />
+            <LinearGradient
+              colors={['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.1)']}
+              style={styles.verificationBadge}
+            >
+              <Check size={12} color="#FFFFFF" />
               <Text style={styles.verificationText}>Verified Account</Text>
-            </View>
+            </LinearGradient>
           </View>
         </LinearGradient>
 
@@ -111,13 +114,20 @@ export default function ProfileScreen() {
           <Text style={styles.sectionTitle}>Your Progress</Text>
           <View style={styles.statsGrid}>
             {stats.map((stat, index) => (
-              <View key={index} style={styles.statCard}>
-                <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
-                  <stat.icon size={24} color={stat.color} />
-                </View>
+              <LinearGradient
+                key={index}
+                colors={['#FFFFFF', '#F8FAFC']}
+                style={styles.statCard}
+              >
+                <LinearGradient
+                  colors={[stat.color, stat.color + '80']}
+                  style={styles.statIcon}
+                >
+                  <stat.icon size={24} color="#FFFFFF" />
+                </LinearGradient>
                 <Text style={styles.statValue}>{stat.value}</Text>
                 <Text style={styles.statLabel}>{stat.label}</Text>
-              </View>
+              </LinearGradient>
             ))}
           </View>
         </View>
@@ -126,11 +136,17 @@ export default function ProfileScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account Information</Text>
           
-          <View style={styles.infoCard}>
+          <LinearGradient
+            colors={['#FFFFFF', '#F8FAFC']}
+            style={styles.infoCard}
+          >
             <View style={styles.infoItem}>
-              <View style={styles.infoIcon}>
-                <Mail size={20} color="#6B7280" />
-              </View>
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.infoIcon}
+              >
+                <Mail size={20} color="#FFFFFF" />
+              </LinearGradient>
               <View style={styles.infoContent}>
                 <Text style={styles.infoLabel}>Email Address</Text>
                 <Text style={styles.infoValue}>{user?.email}</Text>
@@ -140,22 +156,28 @@ export default function ProfileScreen() {
             <View style={styles.divider} />
             
             <View style={styles.infoItem}>
-              <View style={styles.infoIcon}>
-                <Phone size={20} color="#6B7280" />
-              </View>
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.infoIcon}
+              >
+                <Phone size={20} color="#FFFFFF" />
+              </LinearGradient>
               <View style={styles.infoContent}>
                 <Text style={styles.infoLabel}>Phone Number</Text>
                 <Text style={styles.infoValue}>{user?.phone || 'Not added'}</Text>
               </View>
             </View>
-          </View>
+          </LinearGradient>
         </View>
 
         {/* Menu Items */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           
-          <View style={styles.menuCard}>
+          <LinearGradient
+            colors={['#FFFFFF', '#F8FAFC']}
+            style={styles.menuCard}
+          >
             {menuItems.map((item, index) => (
               <TouchableOpacity
                 key={index}
@@ -163,15 +185,18 @@ export default function ProfileScreen() {
                 onPress={item.action}
               >
                 <View style={styles.menuItemLeft}>
-                  <View style={styles.menuIcon}>
-                    <item.icon size={20} color="#6B7280" />
-                  </View>
+                  <LinearGradient
+                    colors={['#8B5CF6', '#7C3AED']}
+                    style={styles.menuIcon}
+                  >
+                    <item.icon size={20} color="#FFFFFF" />
+                  </LinearGradient>
                   <Text style={styles.menuLabel}>{item.label}</Text>
                 </View>
                 <ChevronRight size={16} color="#9CA3AF" />
               </TouchableOpacity>
             ))}
-          </View>
+          </LinearGradient>
         </View>
 
         {/* Logout Button */}
@@ -253,6 +278,11 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
   },
   headerContent: {
     alignItems: 'center',
@@ -273,7 +303,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   userName: {
-    fontSize: 13,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#FFFFFF',
     marginBottom: 4,
@@ -287,10 +317,9 @@ const styles = StyleSheet.create({
   verificationBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
   },
   verificationText: {
     fontSize: 12,
@@ -315,15 +344,14 @@ const styles = StyleSheet.create({
   statCard: {
     flex: 1,
     minWidth: 150,
-    backgroundColor: '#FFFFFF',
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   statIcon: {
     width: 48,
@@ -343,20 +371,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6B7280',
     textAlign: 'center',
+    fontWeight: '600',
   },
   section: {
     paddingHorizontal: 24,
     marginBottom: 24,
   },
   infoCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   infoItem: {
     flexDirection: 'row',
@@ -367,7 +395,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#F3F4F6',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -379,6 +406,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6B7280',
     marginBottom: 2,
+    fontWeight: '600',
   },
   infoValue: {
     fontSize: 16,
@@ -391,13 +419,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 52,
   },
   menuCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    borderRadius: 16,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   menuItem: {
     flexDirection: 'row',
@@ -417,7 +444,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,

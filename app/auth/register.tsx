@@ -97,7 +97,7 @@ export default function RegisterScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient colors={['#EFF6FF', '#DBEAFE', '#FFFFFF']} style={styles.gradient}>
+      <LinearGradient colors={['#F3E8FF', '#EDE9FE', '#FFFFFF']} style={styles.gradient}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardAvoid}
@@ -105,7 +105,7 @@ export default function RegisterScreen() {
           <ScrollView contentContainerStyle={styles.scrollContent}>
             <View style={styles.header}>
               <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                <ArrowLeft size={24} color="#2563EB" />
+                <ArrowLeft size={24} color="#8B5CF6" />
               </TouchableOpacity>
 
               <Text style={styles.title}>Create Account</Text>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     color: '#374151'
   },
   submitButton: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#8B5CF6',
     padding: 16,
     borderRadius: 8
   },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 14,
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontWeight: '600'
   }
 });

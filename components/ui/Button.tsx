@@ -40,7 +40,7 @@ export function Button({
         {loading && (
           <ActivityIndicator
             size="small"
-            color={variant === 'primary' ? '#FFFFFF' : '#2563EB'}
+            color={variant === 'primary' ? '#FFFFFF' : '#8B5CF6'}
             style={styles.loader}
           />
         )}
@@ -79,14 +79,14 @@ const styles = StyleSheet.create({
   
   // Variants
   primary: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#8B5CF6',
   },
   secondary: {
     backgroundColor: '#059669',
   },
   outline: {
     backgroundColor: 'transparent',
-    borderColor: '#2563EB',
+    borderColor: '#8B5CF6',
   },
   ghost: {
     backgroundColor: 'transparent',
@@ -119,11 +119,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   outlineText: {
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontSize: 16,
   },
   ghostText: {
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontSize: 16,
   },
 

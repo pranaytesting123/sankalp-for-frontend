@@ -135,12 +135,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   forgotPassword: {
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontSize: 14,
     fontWeight: '600'
   },
   button: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#8B5CF6',
     padding: 15,
     borderRadius: 8
   },
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   signupLink: {
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontSize: 14,
     fontWeight: '600'
   }

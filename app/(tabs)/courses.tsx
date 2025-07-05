@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BookOpen, Clock, Users, Star } from 'lucide-react-native';
+import { BookOpen, Clock, Users, Star, Sparkles, ExternalLink } from 'lucide-react-native';
 import React, { useEffect, useState, useContext } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
-import { useAuth } from '@/contexts/AuthContext'; // Adjust path as needed
+import { useAuth } from '@/contexts/AuthContext';
 import { API_BASE_URL } from '@/utils/constants';
 import { apiService } from '@/services/api';
-import { useRouter } from 'expo-router'; // ✅ new import
-
+import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type Course = {
   id: number;
@@ -29,8 +29,7 @@ export function useUserCourses() {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // ✅ router initialization
-
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -58,22 +57,32 @@ export function useUserCourses() {
   return { courses, loading };
 }
 
-// --- Replace the hardcoded courses in CoursesScreen with this: ---
-
 export default function CoursesScreen() {
   const { courses, loading } = useUserCourses();
-  const router = useRouter(); // ✅ router initialization
-
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>My Courses</Text>
-        <Text style={styles.subtitle}>Continue your learning journey</Text>
-      </View>
+      <LinearGradient colors={['#8B5CF6', '#7C3AED']} style={styles.header}>
+        <View style={styles.headerContent}>
+          <View>
+            <Text style={styles.title}>My Courses</Text>
+            <Text style={styles.subtitle}>Continue your learning journey</Text>
+          </View>
+          <LinearGradient
+            colors={['#FFFFFF', '#F8FAFC']}
+            style={styles.headerIcon}
+          >
+            <BookOpen size={24} color="#8B5CF6" />
+          </LinearGradient>
+        </View>
+      </LinearGradient>
 
       {loading ? (
-        <ActivityIndicator size="large" style={{ marginTop: 32 }} />
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#8B5CF6" />
+          <Text style={styles.loadingText}>Loading your courses...</Text>
+        </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
           {courses.map((course) => (
@@ -84,42 +93,59 @@ export default function CoursesScreen() {
                 router.push({
                   pathname: '/course/[courseId]/modules',
                   params: {
-                    courseId: course.id.toString(), // Make sure it's a string
-                    title: course.title,            // Optional, use it on the next screen if needed
+                    courseId: course.id.toString(),
+                    title: course.title,
                   },
                 })
               }
             >
-              <View style={[styles.courseIcon, { backgroundColor: '#2563EB20' }]}>
-                <BookOpen size={24} color="#2563EB" />
-              </View>
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.courseIcon}
+              >
+                <BookOpen size={24} color="#FFFFFF" />
+              </LinearGradient>
               <View style={styles.courseContent}>
                 <Text style={styles.courseTitle}>{course.title}</Text>
                 <Text style={styles.courseInstructor}>{course.description}</Text>
-                {/* You can add more info here if needed */}
+                <View style={styles.courseBadge}>
+                  <Sparkles size={12} color="#8B5CF6" />
+                  <Text style={styles.courseBadgeText}>Enrolled</Text>
+                </View>
               </View>
             </TouchableOpacity>
           ))}
-          <View style={styles.promoBannerContainer}>
+          
+          <LinearGradient
+            colors={['#F3E8FF', '#EDE9FE']}
+            style={styles.promoBannerContainer}
+          >
             <TouchableOpacity
               style={styles.promoBanner}
               onPress={() => {
                 router.push('https://sankalp.spectov.in/#services');
               }}
             >
-              <Text style={styles.promoTitle}>Explore More Courses 🚀</Text>
-              <Text style={styles.promoSubtitle}>
-                Discover new opportunities and grow your skills.
-              </Text>
-              <Text style={styles.promoLink}>View All Courses</Text>
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.promoIcon}
+              >
+                <ExternalLink size={20} color="#FFFFFF" />
+              </LinearGradient>
+              <View style={styles.promoContent}>
+                <Text style={styles.promoTitle}>Explore More Courses 🚀</Text>
+                <Text style={styles.promoSubtitle}>
+                  Discover new opportunities and grow your skills.
+                </Text>
+                <Text style={styles.promoLink}>View All Courses</Text>
+              </View>
             </TouchableOpacity>
-          </View>
+          </LinearGradient>
         </ScrollView>
       )}
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -130,16 +156,52 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 20,
     paddingBottom: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    marginBottom: 20,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#FFFFFF',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
+    color: '#E0E7FF',
+  },
+  headerIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
     color: '#6B7280',
+    fontWeight: '500',
   },
   content: {
     flex: 1,
@@ -151,11 +213,11 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 16,
     flexDirection: 'row',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 3,
+    elevation: 4,
   },
   courseIcon: {
     width: 56,
@@ -178,83 +240,62 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6B7280',
     marginBottom: 12,
+    lineHeight: 20,
   },
-  courseStats: {
-    flexDirection: 'row',
-    gap: 16,
-    marginBottom: 12,
-  },
-  statItem: {
+  courseBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    backgroundColor: '#F3E8FF',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
   },
-  statText: {
+  courseBadgeText: {
     fontSize: 12,
-    color: '#6B7280',
-    fontWeight: '500',
-  },
-  progressSection: {
-    marginTop: 8,
-  },
-  progressInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  progressLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    fontWeight: '500',
-  },
-  progressPercent: {
-    fontSize: 12,
-    color: '#111827',
+    color: '#8B5CF6',
     fontWeight: '600',
-  },
-  progressBar: {
-    height: 6,
-    backgroundColor: '#E5E7EB',
-    borderRadius: 3,
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 3,
+    marginLeft: 4,
   },
   promoBannerContainer: {
     marginTop: 8,
     marginBottom: 32,
-    paddingHorizontal: 8,
+    borderRadius: 20,
+    padding: 2,
   },
   promoBanner: {
-    backgroundColor: '#EFF6FF',
-    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
     padding: 20,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#3B82F6',
-    borderWidth: 1,
   },
-
+  promoIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  promoContent: {
+    flex: 1,
+  },
   promoTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1D4ED8',
+    color: '#8B5CF6',
     marginBottom: 6,
   },
-
   promoSubtitle: {
     fontSize: 14,
-    color: '#1E40AF',
-    marginBottom: 10,
-    textAlign: 'center',
+    color: '#6B7280',
+    marginBottom: 8,
+    lineHeight: 20,
   },
-
   promoLink: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#2563EB',
-    textDecorationLine: 'underline',
+    color: '#8B5CF6',
   },
-
 });

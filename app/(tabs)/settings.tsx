@@ -9,9 +9,10 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, Shield, CircleHelp as HelpCircle, FileText, Star, LogOut, ChevronRight, Moon, Globe, Download, Trash2 } from 'lucide-react-native';
+import { Bell, Shield, CircleHelp as HelpCircle, FileText, Star, LogOut, ChevronRight, Moon, Globe, Download, Trash2, Settings as SettingsIcon } from 'lucide-react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SettingsScreen() {
   const { logout } = useAuth();
@@ -127,9 +128,12 @@ export default function SettingsScreen() {
       disabled={item.type === 'switch'}
     >
       <View style={styles.settingItemLeft}>
-        <View style={styles.settingIcon}>
-          <item.icon size={20} color="#6B7280" />
-        </View>
+        <LinearGradient
+          colors={['#8B5CF6', '#7C3AED']}
+          style={styles.settingIcon}
+        >
+          <item.icon size={20} color="#FFFFFF" />
+        </LinearGradient>
         <View style={styles.settingContent}>
           <Text style={styles.settingLabel}>{item.label}</Text>
           {item.value && item.type === 'navigation' && (
@@ -142,7 +146,7 @@ export default function SettingsScreen() {
         <Switch
           value={item.value}
           onValueChange={item.onToggle}
-          trackColor={{ false: '#E5E7EB', true: '#2563EB' }}
+          trackColor={{ false: '#E5E7EB', true: '#8B5CF6' }}
           thumbColor="#FFFFFF"
         />
       ) : (
@@ -153,21 +157,34 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Settings</Text>
-        <Text style={styles.subtitle}>Manage your app preferences</Text>
-      </View>
+      <LinearGradient colors={['#8B5CF6', '#7C3AED']} style={styles.header}>
+        <View style={styles.headerContent}>
+          <View>
+            <Text style={styles.title}>Settings</Text>
+            <Text style={styles.subtitle}>Manage your app preferences</Text>
+          </View>
+          <LinearGradient
+            colors={['#FFFFFF', '#F8FAFC']}
+            style={styles.headerIcon}
+          >
+            <SettingsIcon size={24} color="#8B5CF6" />
+          </LinearGradient>
+        </View>
+      </LinearGradient>
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
         {settingsGroups.map((group, groupIndex) => (
           <View key={groupIndex} style={styles.settingGroup}>
             <Text style={styles.groupTitle}>{group.title}</Text>
             
-            <View style={styles.groupCard}>
+            <LinearGradient
+              colors={['#FFFFFF', '#F8FAFC']}
+              style={styles.groupCard}
+            >
               {group.items.map((item, itemIndex) =>
                 renderSettingItem(item, itemIndex, itemIndex === group.items.length - 1)
               )}
-            </View>
+            </LinearGradient>
           </View>
         ))}
 
@@ -175,15 +192,27 @@ export default function SettingsScreen() {
         <View style={styles.settingGroup}>
           <Text style={styles.groupTitle}>About</Text>
           
-          <View style={styles.groupCard}>
-            <View style={styles.appInfo}>
+          <LinearGradient
+            colors={['#FFFFFF', '#F8FAFC']}
+            style={styles.groupCard}
+          >
+            <LinearGradient
+              colors={['#F3E8FF', '#EDE9FE']}
+              style={styles.appInfo}
+            >
+              <LinearGradient
+                colors={['#8B5CF6', '#7C3AED']}
+                style={styles.appIcon}
+              >
+                <SettingsIcon size={24} color="#FFFFFF" />
+              </LinearGradient>
               <Text style={styles.appName}>Sankalp Educational Platform</Text>
               <Text style={styles.appVersion}>Version 1.0.0</Text>
               <Text style={styles.appDescription}>
                 Empowering students with quality education and innovative learning experiences.
               </Text>
-            </View>
-          </View>
+            </LinearGradient>
+          </LinearGradient>
         </View>
 
         {/* Logout Section */}
@@ -216,16 +245,41 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 20,
     paddingBottom: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    marginBottom: 20,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#FFFFFF',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#E0E7FF',
+  },
+  headerIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
   },
   content: {
     flex: 1,
@@ -243,13 +297,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   groupCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    borderRadius: 16,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   settingItem: {
     flexDirection: 'row',
@@ -270,7 +323,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -289,13 +341,22 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   appInfo: {
-    padding: 16,
+    padding: 20,
     alignItems: 'center',
+    borderRadius: 16,
+  },
+  appIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
   },
   appName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#8B5CF6',
     textAlign: 'center',
     marginBottom: 4,
   },

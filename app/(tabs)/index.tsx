@@ -12,7 +12,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   BookOpen,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  TrendingUp
 } from 'lucide-react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useAuth } from '@/contexts/AuthContext';
@@ -97,33 +99,39 @@ export default function HomeScreen() {
   }, [authData]);
 
   const stats = [
-    { icon: BookOpen, label: 'Courses', value: courses.length.toString(), color: '#2563EB' },
+    { icon: BookOpen, label: 'Courses', value: courses.length.toString(), color: '#8B5CF6' },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <LinearGradient colors={['#2563EB', '#1D4ED8']} style={styles.header}>
+        <LinearGradient colors={['#8B5CF6', '#7C3AED']} style={styles.header}>
           <View style={styles.headerContent}>
             <View>
               <Text style={styles.greeting}>Hello,</Text>
               <Text style={styles.userName}>{username}</Text>
             </View>
-            <View style={styles.avatar}>
+            <LinearGradient
+              colors={['#FFFFFF', '#F8FAFC']}
+              style={styles.avatar}
+            >
               <Text style={styles.avatarText}>
                 {username.charAt(0).toUpperCase()}
               </Text>
-            </View>
+            </LinearGradient>
           </View>
         </LinearGradient>
 
         {courses.length > 0 && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Continue Learning</Text>
+              <View style={styles.sectionTitleContainer}>
+                <Sparkles size={20} color="#8B5CF6" />
+                <Text style={styles.sectionTitle}>Continue Learning</Text>
+              </View>
               <TouchableOpacity style={styles.seeAllButton}>
                 <Text style={styles.seeAllText}>See All</Text>
-                <ChevronRight size={16} color="#2563EB" />
+                <ChevronRight size={16} color="#8B5CF6" />
               </TouchableOpacity>
             </View>
 
@@ -138,8 +146,15 @@ export default function HomeScreen() {
                   })
                 }
               >
+                <LinearGradient
+                  colors={['#8B5CF6', '#7C3AED']}
+                  style={styles.courseGradient}
+                >
+                  <BookOpen size={20} color="#FFFFFF" />
+                </LinearGradient>
                 <View style={styles.courseInfo}>
                   <Text style={styles.courseTitle}>{course.title}</Text>
+                  <Text style={styles.courseSubtitle}>Continue where you left off</Text>
                 </View>
                 <ChevronRight size={20} color="#6B7280" />
               </TouchableOpacity>
@@ -148,30 +163,48 @@ export default function HomeScreen() {
         )}
 
         <View style={styles.statsContainer}>
-          <Text style={styles.sectionTitle}>Your Progress</Text>
+          <View style={styles.sectionTitleContainer}>
+            <TrendingUp size={20} color="#8B5CF6" />
+            <Text style={styles.sectionTitle}>Your Progress</Text>
+          </View>
           <View style={styles.statsGrid}>
             {stats.map((stat, index) => (
-              <View key={index} style={styles.statCard}>
-                <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
-                  <stat.icon size={24} color={stat.color} />
-                </View>
+              <LinearGradient
+                key={index}
+                colors={['#FFFFFF', '#F8FAFC']}
+                style={styles.statCard}
+              >
+                <LinearGradient
+                  colors={['#8B5CF6', '#7C3AED']}
+                  style={styles.statIcon}
+                >
+                  <stat.icon size={24} color="#FFFFFF" />
+                </LinearGradient>
                 <Text style={styles.statValue}>{stat.value}</Text>
                 <Text style={styles.statLabel}>{stat.label}</Text>
-              </View>
+              </LinearGradient>
             ))}
           </View>
         </View>
 
         {recommended.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Recommended for You</Text>
+            <View style={styles.sectionTitleContainer}>
+              <Sparkles size={20} color="#8B5CF6" />
+              <Text style={styles.sectionTitle}>Recommended for You</Text>
+            </View>
             {recommended.map((course) => (
               <TouchableOpacity
                 key={course.id}
                 style={styles.courseCard}
                 onPress={() => Linking.openURL('https://sankalp.spectov.in/#services')}
-
               >
+                <LinearGradient
+                  colors={['#A855F7', '#9333EA']}
+                  style={styles.courseGradient}
+                >
+                  <BookOpen size={20} color="#FFFFFF" />
+                </LinearGradient>
                 <View style={styles.courseInfo}>
                   <Text style={styles.courseTitle}>{course.title}</Text>
                   <Text style={{ color: '#6B7280', fontSize: 13 }} numberOfLines={2}>
@@ -188,9 +221,7 @@ export default function HomeScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
-  // ... [all your styles remain unchanged here]
   container: {
     flex: 1,
     backgroundColor: '#F9FAFB',
@@ -201,9 +232,12 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
-    borderTopLeftRadius:24,
-    borderTopRightRadius:24,
     marginBottom: 20,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
   },
   headerContent: {
     flexDirection: 'row',
@@ -225,14 +259,18 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
   },
   avatarText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#8B5CF6',
   },
   statsContainer: {
     padding: 24,
@@ -241,6 +279,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#111827',
+    marginLeft: 8,
+  },
+  sectionTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 16,
   },
   statsGrid: {
@@ -251,15 +294,14 @@ const styles = StyleSheet.create({
   statCard: {
     flex: 1,
     minWidth: (width - 60) / 2,
-    backgroundColor: '#FFFFFF',
-    padding: 16,
-    borderRadius: 12,
+    padding: 20,
+    borderRadius: 16,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   statIcon: {
     width: 48,
@@ -267,7 +309,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
   },
   statValue: {
     fontSize: 24,
@@ -279,6 +321,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6B7280',
     textAlign: 'center',
+    fontWeight: '600',
   },
   section: {
     paddingHorizontal: 24,
@@ -296,54 +339,30 @@ const styles = StyleSheet.create({
   },
   seeAllText: {
     fontSize: 14,
-    color: '#2563EB',
+    color: '#8B5CF6',
     fontWeight: '600',
     marginRight: 4,
-  },
-  quickActionsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-  },
-  quickActionCard: {
-    flex: 1,
-    minWidth: (width - 60) / 2,
-    backgroundColor: '#FFFFFF',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  quickActionIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  quickActionLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    textAlign: 'center',
-    fontWeight: '600',
   },
   courseCard: {
     backgroundColor: '#FFFFFF',
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  courseGradient: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
   },
   courseInfo: {
     flex: 1,
@@ -354,53 +373,9 @@ const styles = StyleSheet.create({
     color: '#111827',
     marginBottom: 4,
   },
-  eventCard: {
-    backgroundColor: '#FFFFFF',
-    padding: 16,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  eventDate: {
-    backgroundColor: '#EFF6FF',
-    width: 60,
-    height: 60,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  eventDay: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#2563EB',
-  },
-  eventMonth: {
+  courseSubtitle: {
     fontSize: 12,
-    color: '#2563EB',
-    fontWeight: '600',
-  },
-  eventInfo: {
-    flex: 1,
-  },
-  eventTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: 4,
-  },
-  eventTime: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 2,
-  },
-  eventLocation: {
-    fontSize: 14,
-    color: '#6B7280',
+    color: '#8B5CF6',
+    fontWeight: '500',
   },
 });
